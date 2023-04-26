@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: countdown-cronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: countdown-cronjob
+        spec:
+          containers:
+          - name: counter
+            image: debian:bullseye
+            command:
+            - "bin/bash"
+            - "-c"
+            - "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; done"
+            # env:
+            #  - name: WHO_AM_I
+            #    value: this_is_figures
+          restartPolicy: OnFailure
